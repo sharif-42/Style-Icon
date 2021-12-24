@@ -1,13 +1,43 @@
 version: "3"
 
+volumes:
+  style_icon_data: {}
+  style_icon_data_backups: {}
+
+
 services:
   django:
     build:
       context: .
     ports:
       - "8000:8000"
-    command: python manage.py runserver 0.0.0.0:8000
+    command: >
+      sh -c " python manage.py makemigrations &&
+              python manage.py migrate &&
+              python manage.py runserver 0.0.0.0:8000
+            "
     volumes:
       - .:/code
+    environment:
+      - DB_HOST=db
+      - DB_NAME=style-icon
+      - DB_USER=style-icon
+      - DB_PASS=style-icon
+    depends_on:
+      - db
+
     stdin_open: true
     tty: true
+
+  db:
+    image: postgres:12.0-alpine
+    volumes:
+      - style_icon_data:/var/lib/style-icon/data/
+    environment:
+      - POSTGRES_USER=style-icon
+      - POSTGRES_PASSWORD=style-icon
+      - POSTGRES_DB=style-icon
+
+networks:
+  style-icon_backend_network:
+    driver: bridge
