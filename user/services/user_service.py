@@ -1,8 +1,13 @@
+from django.contrib.auth import authenticate, login
 from ..models import User
 
 
 class UserService:
     model = User
+
+    def __init__(self, request=None, user=None):
+        self.request = request
+        self.user = user
 
     def create_user(self, *args, **kwargs):
         """
@@ -34,3 +39,16 @@ class UserService:
         """
         active_user_list = self.model.objects.filter(is_acvite=True)
         return active_user_list
+
+    def user_login(self, username, password):
+        """
+        :param username:
+        :param password:
+        :return: authenticated user
+        """
+        authenticated_user = authenticate(username=username,password=password)
+        if authenticated_user:
+            login(request=self.request, user=authenticated_user)
+            return authenticated_user
+        else:
+            return None
