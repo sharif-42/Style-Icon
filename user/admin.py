@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
 
-from user.models import User
+from user.models import User, UserLoginLog
 
 
 class UserAdmin(BaseUserAdmin):
@@ -14,10 +14,10 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         ('Personal info', {'fields': (
-             'phone_number', 'email', 'first_name', 'mid_name', 'last_name', 'is_staff',
-             'is_active', 'is_blocked', 'is_dashboard_user', 'is_pending',
-         )
-         }),
+            'phone_number', 'email', 'first_name', 'mid_name', 'last_name', 'is_staff',
+            'is_active', 'is_blocked', 'is_dashboard_user', 'is_pending',
+        )
+        }),
         ('Permissions', {'fields': ('user_permissions', 'groups')}),
         ('Important dates', {'fields': ('last_login', 'updated_at', 'joined_date')}),
     )
@@ -33,4 +33,11 @@ class UserAdmin(BaseUserAdmin):
     )
 
 
+class UserLoginLogModelAdmin(admin.ModelAdmin):
+    list_display = ("used_user_name", "used_email", "is_successful")
+    list_filter = ("is_successful",)
+    readonly_fields = ("used_user_name", "attempted_time", "ip_address")
+
+
 admin.site.register(User, UserAdmin)
+admin.site.register(UserLoginLog, UserLoginLogModelAdmin)
