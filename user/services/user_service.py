@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from ..models import User
 
 
@@ -52,3 +52,15 @@ class UserService:
             return authenticated_user
         else:
             return None
+
+    def logout(self):
+        """
+        This method is for signing out a customer
+        :return: boolean, dicttionary
+        """
+        if self.request.user.is_authenticated:
+            logout(self.request)
+            successful = True
+        else:
+            successful = False
+        return successful

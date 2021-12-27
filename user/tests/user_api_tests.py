@@ -2,9 +2,10 @@ from django.conf import settings
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
-
 from rest_framework.test import APIClient
 from rest_framework import status
+
+from ..models import UserLoginLog
 
 # urls/views for tests
 CREATE_USER_URL = reverse(f"{settings.API_VERSION_NAMESPACE}:user:user-list-create")
@@ -66,6 +67,9 @@ class PublicUserApiTests(TestCase):
         }
         self.create_user(**payload)  # creating user with same token
         response = self.client.post(USER_TOKEN_URL, payload)  # requesting for token with valid credentials
+
+        user_login_log = UserLoginLog.objects.filter(used_user_name=payload['username']).last()
+        self.assertTrue(payload['username'], user_login_log.used_user_name)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn('access_token', response.data)
         self.assertIn('refresh_token', response.data)
@@ -84,6 +88,8 @@ class PublicUserApiTests(TestCase):
         self.create_user(**payload_for_create_user)  # creating user with same token
         response = self.client.post(USER_TOKEN_URL, payload_for_token)  # requesting for token with valid credentials
 
+        user_login_log = UserLoginLog.objects.filter(used_user_name=payload_for_token['username']).last()
+        self.assertTrue(payload_for_token['username'], user_login_log.used_user_name)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertNotIn('token', response)
 
@@ -94,6 +100,9 @@ class PublicUserApiTests(TestCase):
             "password": "testpass",
         }
         response = self.client.post(USER_TOKEN_URL, payload)
+
+        user_login_log = UserLoginLog.objects.filter(used_user_name=payload['username']).last()
+        self.assertTrue(payload['username'], user_login_log.used_user_name)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertNotIn('token', response)
 

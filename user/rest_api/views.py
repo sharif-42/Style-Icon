@@ -3,6 +3,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
 from rest_framework import status, generics
 from rest_framework.permissions import IsAdminUser
+from rest_framework.views import APIView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -77,3 +78,18 @@ class UserLoginApiView(TokenObtainPairView):
                 "message": _("Unable to authenticate with provided credentials!")
             }
             return Response(custom_response, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class UserLogOutAPIView(APIView):
+    """
+    API view for Log-out
+    """
+    service_class = UserService
+
+    def get(self, request,  *args, **kwargs):
+        res = UserService(request=self.request).logout()
+        response = {'status': 'successfully logged out' if res else 'Failed to logged out'}
+        if res:
+            return Response(response, status=status.HTTP_200_OK)
+        else:
+            return Response(response, status=status.HTTP_400_BAD_REQUEST)
