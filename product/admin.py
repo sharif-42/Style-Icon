@@ -8,7 +8,7 @@ from common.admin import ProductBaseReadOnlyAdmin
 
 @admin.register(Product)
 class ProductModelAdmin(ProductBaseReadOnlyAdmin):
-    list_display = ('name', 'code', 'product_group', 'product_type', 'brand', 'unit', 'is_serviceable')
+    list_display = ('name', 'code', 'product_group', 'product_type', 'brand', 'in_stock', 'is_serviceable')
 
 
 @admin.register(ProductType)

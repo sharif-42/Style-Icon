@@ -12,7 +12,7 @@ class LogBase(models.Model):
         User,
         on_delete=models.CASCADE,
         help_text=_('who created.'),
-        related_name='creator',
+        related_name="%(class)s_created_by",
         null=True,
         blank=True,
     )
@@ -20,7 +20,7 @@ class LogBase(models.Model):
         User,
         on_delete=models.CASCADE,
         help_text=_('who updated.'),
-        related_name='updator',
+        related_name="%(class)s_updated_by",
         null=True,
         blank=True,
     )

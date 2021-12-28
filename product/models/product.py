@@ -37,8 +37,8 @@ class Product(ProductBaseModel):
         related_name="products",
     )
     in_stock = models.PositiveIntegerField(
-        default=1,
-        help_text=_("Amount of available products. default 1")
+        default=0,
+        help_text=_("Amount of available products.")
     )
     short_description = models.TextField(
         help_text=_("Short summary, can be used in search results."),
