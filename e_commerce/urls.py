@@ -21,7 +21,7 @@ api_patterns = (
     [
         path("user/", include('user.rest_api.urls')),
         # path("search/", include('search.rest_api.urls')),
-        # path("products/", include('product.rest_api.urls')),
+        path("products/", include('product.rest_api.urls')),
     ], "api"
 )
 
