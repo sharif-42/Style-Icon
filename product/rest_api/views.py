@@ -24,7 +24,7 @@ class ProductDetailsApiView(generics.RetrieveAPIView):
     serializer_class = ProductDetailsSerializer
     service_class = ProductService
 
-    def get(self, request, uuid, *args, **kwargs):
-        product = self.service_class().get_product_by_uuid(uuid=uuid)
+    def get(self, request, *args, **kwargs):
+        product = self.service_class().get_product_by_uuid(uuid=kwargs.get('uuid'))
         serializer = self.serializer_class(product)
         return Response(serializer.data, status=status.HTTP_200_OK)

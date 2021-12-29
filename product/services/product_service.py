@@ -11,6 +11,7 @@ class ProductService:
         self.user = user
 
     def get_product_by_uuid(self, uuid):
+        # TODO: handle the exceptions
         return self.model.objects.get(uuid=uuid)
 
     def get_active_product_list(self):

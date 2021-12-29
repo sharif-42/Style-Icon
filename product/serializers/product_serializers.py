@@ -1,10 +1,12 @@
 from rest_framework import serializers
 
 from product.models import Product
+from product.serializers.product_brand_serializers import ProductBrandSerializer
+from product.serializers.product_group_serializers import ProductGroupSerializer
+from product.serializers.product_type_serializers import ProductTypeSerializer
 
 
 class ProductListSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Product
         fields = [
@@ -45,11 +47,10 @@ class ProductDetailsSerializer(serializers.ModelSerializer):
         ]
 
     def get_product_group(self, instance):
-        return instance.name
+        return ProductGroupSerializer(instance.product_group).data
 
     def get_product_type(self, instance):
-        return instance.name
+        return ProductTypeSerializer(instance.product_type).data
 
     def get_brand(self, instance):
-        return instance.name
-
+        return ProductBrandSerializer(instance.brand).data
