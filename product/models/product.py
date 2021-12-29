@@ -56,8 +56,7 @@ class Product(ProductBaseModel):
         blank=True,
         null=True,
         help_text=_(
-            "Default weight of product. "
-            "On variant level weight can be entered per product."
+            "Default weight of product in grams. "
         ),
     )
     release_date = models.DateField(
@@ -74,11 +73,6 @@ class Product(ProductBaseModel):
         default=False,
         help_text=_("Is the product serviceable")
     )
-    is_available = models.BooleanField(
-        default=True,
-        help_text=_("Is the product available?")
-    )
-
     valid_from = models.DateTimeField(
         null=True,
         blank=True,
