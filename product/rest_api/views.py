@@ -6,15 +6,23 @@ from product.serializers import (
     ProductListSerializer,
     ProductDetailsSerializer,
 )
+from common.paginations import ProductPageNumberPagination
 
 
 class ProductListApiView(generics.ListAPIView):
     """ This api will consumed by FE """
     serializer_class = ProductListSerializer
     service_class = ProductService
+    pagination_class = ProductPageNumberPagination
 
     def list(self, request, *args, **kwargs):
         product_list = self.service_class().get_active_product_list()
+
+        page = self.paginate_queryset(product_list)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
         serializer = self.serializer_class(product_list, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
