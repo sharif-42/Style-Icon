@@ -15,19 +15,24 @@ from ..serializers import (
     UserOutputSerializer
 )
 from ..services import UserService, UserLoginLogService
+from common.paginations import UserPageNumberPagination
 
 
 class UserListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = UserInputSerializer  # input serializer
     output_serializer_class = UserOutputSerializer  # output serializer
     service_class = UserService
+    pagination_class = UserPageNumberPagination
 
     # permission_classes = [IsAdminUser]
     # TODO: add required permission classes
-    # TODO: Add pagination for list api
 
     def list(self, request, *args, **kwargs):
         users = self.service_class().get_user_list()
+        page = self.paginate_queryset(users)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
         serializer = self.output_serializer_class(users, many=True)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -86,7 +91,7 @@ class UserLogOutAPIView(APIView):
     """
     service_class = UserService
 
-    def get(self, request,  *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         res = UserService(request=self.request).logout()
         response = {'status': 'successfully logged out' if res else 'Failed to logged out'}
         if res:
