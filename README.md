@@ -31,19 +31,21 @@ products and product details. Can create cart and then order.
     ```
 * To create and populate the Elasticsearch index and mapping use the search_index command:
   ```shell
-  docker exec -it e-commerce_web_1 sh -c "python manage.py search_index --rebuild -f"  # reindex
-  docker exec -it e-commerce_web_1 sh -c "python manage.py search_index --delete -f" # delete index
-  docker exec -it e-commerce_web_1 sh -c "python manage.py search_index --populate -f" # populate data 
+  docker exec -it style-icon_django_1 sh -c "python manage.py search_index --rebuild -f"  # reindex
+  docker exec -it style-icon_django_1 sh -c "python manage.py search_index --delete -f" # delete index
+  docker exec -it style-icon_django_1 sh -c "python manage.py search_index --populate -f" # populate data 
    ```
 * Necessary Management Commands
   ```shell
-  # run shell
-  docker exec -it e-commerce_web_1 sh -c "python manage.py shell_plus"
-  # migration commands
-  docker exec -it e-commerce_web_1 sh -c "python manage.py makemigrations"
-  docker exec -it e-commerce_web_1 sh -c "python manage.py migrate"
-  # create super user
-  docker exec -it e-commerce_web_1 sh -c "python manage.py createsuperuser"
+  # Create new app
+  docker-compose run style-icon_django_1 sh -c "python manage.py startapp <App_Name>"
+  # Migration commands
+  docker exec -it style-icon_django_1 sh -c "python manage.py makemigrations"
+  docker exec -it style-icon_django_1 sh -c "python manage.py migrate"
+  # Create super user
+  docker exec -it style-icon_django_1 sh -c "python manage.py createsuperuser"
+  # Run shell
+  docker exec -it style-icon_django_1 sh -c "python manage.py shell_plus"
   ```
 
 ## Run in Local Environment

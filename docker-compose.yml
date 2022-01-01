@@ -1,8 +1,9 @@
 version: "3"
 
 volumes:
-  style_icon_data: {}
-  style_icon_data_backups: {}
+  style_icon_data: { }
+  style_icon_data_backups: { }
+  style-icon_elasticsearch_data: { }
 
 
 services:
@@ -11,11 +12,7 @@ services:
       context: .
     ports:
       - "8000:8000"
-    command: >
-      sh -c " python manage.py makemigrations &&
-              python manage.py migrate &&
-              python manage.py runserver 0.0.0.0:8000
-            "
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
     environment:
@@ -25,6 +22,15 @@ services:
       - DB_PASS=style-icon
     depends_on:
       - db
+      - elastic_search
+    networks:
+      style-icon_backend_network:
+        aliases:
+          - e-commerce
+      default:
+    links:
+      - db
+      - elastic_search
 
     stdin_open: true
     tty: true
@@ -37,6 +43,23 @@ services:
       - POSTGRES_USER=style-icon
       - POSTGRES_PASSWORD=style-icon
       - POSTGRES_DB=style-icon
+
+  elastic_search:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.4
+    container_name: style-icon_elastic_search
+    environment:
+      - node.name=style-icon_elastic_search
+      - cluster.name=style-icon_es-docker-cluster
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - style-icon_elasticsearch_data:/usr/share/style-icon/elasticsearch/data
+    ports:
+      - 9200:9200
 
 networks:
   style-icon_backend_network:
