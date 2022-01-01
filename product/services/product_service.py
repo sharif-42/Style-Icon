@@ -26,3 +26,10 @@ class ProductService:
             is_available=True, valid_from__lte=now, valid_until__gte=now
         )
         return product_list
+
+    def get_product_name_by_product_code(self, product_code):
+        try:
+            product = self.model.objects.get(code=product_code)
+            return product.name
+        except Product.DoesNotExist:
+            raise ProductNotFoundException()

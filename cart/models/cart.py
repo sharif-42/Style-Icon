@@ -57,10 +57,19 @@ class Cart(models.Model):
         ordering = ['-id']
         indexes = [
             models.Index(
-                fields=['payment_type',]
+                fields=['uuid', 'payment_type', ]
             ),
         ]
 
     def __str__(self):
         return f"Cart - {self.id}"
 
+    def save(self, *args, **kwargs):
+        total_amount = 0
+        total_amount_ex_vat = 0
+        for line in self.lines.all():
+            total_amount += line.total_amount
+            total_amount_ex_vat += line.total_amount_ex_vat
+        self.total_amount = total_amount
+        self.total_amount_ex_vat = total_amount_ex_vat
+        super().save(*args, **kwargs)

@@ -66,12 +66,17 @@ class Product(ProductBaseModel):
     )
     pre_order = models.BooleanField(
         default=False,
-        verbose_name=_("Product is a pre-order product"),
+        verbose_name=_("Is pre-order product"),
         help_text=_('Can be pre ordered')
     )
     is_serviceable = models.BooleanField(
         default=False,
         help_text=_("Is the product serviceable")
+    )
+    service_period = models.IntegerField(
+        default=0,
+        help_text=_("Service Period in Months. How long user get free service."),
+        verbose_name=_("Service Period in Months."),
     )
     valid_from = models.DateTimeField(
         null=True,
