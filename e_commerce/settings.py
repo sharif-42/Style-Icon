@@ -39,7 +39,7 @@ INSTALLED_APPS = [
 ]
 THIRD_PARTY_APPS = [
     # 'django_extensions',
-    # 'django_elasticsearch_dsl',
+    'django_elasticsearch_dsl',
     'rest_framework',
     'rest_framework_simplejwt',
 ]
@@ -49,7 +49,7 @@ LOCAL_APPS = [
     'common',
     'product',
     # 'order',
-    # 'search',
+    'search',
     'user',
 ]
 
@@ -162,4 +162,11 @@ REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'rest_utils.exceptions.custom_exception_handler',
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     # 'PAGE_SIZE': 100,
+}
+
+# Elastic Search
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'http://elastic_search:9200/'
+    },
 }
