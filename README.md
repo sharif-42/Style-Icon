@@ -38,7 +38,7 @@ products and product details. Can create cart and then order.
 * Necessary Management Commands
   ```shell
   # Create new app
-  docker-compose run django sh -c "python manage.py startapp <App_Name>"
+  docker-compose run style-icon_django_1 sh -c "python manage.py startapp <App_Name>"
   # Migration commands
   docker exec -it style-icon_django_1 sh -c "python manage.py makemigrations"
   docker exec -it style-icon_django_1 sh -c "python manage.py migrate"
