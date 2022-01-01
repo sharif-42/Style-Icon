@@ -45,7 +45,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    # 'cart',
+    'cart',
     'common',
     'product',
     # 'order',
