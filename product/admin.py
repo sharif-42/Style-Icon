@@ -9,7 +9,7 @@ from common.admin import ProductBaseReadOnlyAdmin
 
 @admin.register(Product)
 class ProductModelAdmin(ProductBaseReadOnlyAdmin):
-    list_display = ('name', 'code', 'product_group', 'product_type',
+    list_display = ('name', 'code', 'is_available', 'product_group', 'product_type',
                     'brand', 'in_stock', 'pre_order', 'is_serviceable', 'service_period')
     list_filter = ('is_serviceable', 'pre_order',)
     search_fields = ('code', 'name',)

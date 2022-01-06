@@ -16,17 +16,20 @@ class ProductDocument(Document):
         'name': fields.TextField(),
         'description': fields.TextField(),
         'is_available': fields.BooleanField(),
+        'code': fields.KeywordField(),
     })
     product_type = fields.ObjectField(properties={
         'name': fields.TextField(),
         'description': fields.TextField(),
         'system_type': fields.TextField(),
         'is_available': fields.BooleanField(),
+        'code': fields.KeywordField(),
     })
     brand = fields.ObjectField(properties={
         'name': fields.TextField(),
         'description': fields.TextField(),
         'is_available': fields.BooleanField(),
+        'code': fields.KeywordField(),
     })
     uuid = fields.KeywordField()
     code = fields.KeywordField()
