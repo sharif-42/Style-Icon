@@ -3,7 +3,7 @@ version: "3"
 volumes:
   style_icon_data: { }
   style_icon_data_backups: { }
-  style-icon_elasticsearch_data: { }
+  style_icon_elasticsearch_data: { }
 
 
 services:
@@ -26,10 +26,11 @@ services:
     networks:
       style-icon_backend_network:
         aliases:
-          - e-commerce
+          - style-icon-django
       default:
     links:
       - db
+      - redis
       - elastic_search
 
     stdin_open: true
@@ -44,6 +45,9 @@ services:
       - POSTGRES_PASSWORD=style-icon
       - POSTGRES_DB=style-icon
 
+  redis:
+    image: redis:6.2-alpine
+
   elastic_search:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.13.4
     container_name: style-icon_elastic_search
@@ -57,7 +61,7 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - style-icon_elasticsearch_data:/usr/share/style-icon/elasticsearch/data
+      - style_icon_elasticsearch_data:/usr/share/style-icon/elasticsearch/data
     ports:
       - 9200:9200
 

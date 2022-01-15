@@ -170,3 +170,19 @@ ELASTICSEARCH_DSL = {
         'hosts': 'http://elastic_search:9200/'
     },
 }
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#caches
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/1",
+        "TIMEOUT": 3600,  # 1 hour
+        "OPTIONS": {
+            "MAX_ENTRIES": 1000,
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            # Mimicing memcache behavior.
+            # http://niwinz.github.io/django-redis/latest/#_memcached_exceptions_behavior
+            "IGNORE_EXCEPTIONS": True,
+        }
+    }
+}
