@@ -29,3 +29,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/v1/", include(api_patterns, namespace=settings.API_VERSION_NAMESPACE)),
 ]
+
+if settings.DEBUG:
+    urlpatterns += path('__debug__/', include('debug_toolbar.urls')),

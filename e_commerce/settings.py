@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 THIRD_PARTY_APPS = [
-    # 'django_extensions',
+    "debug_toolbar",
+    "django_extensions",
     'django_elasticsearch_dsl',
     'rest_framework',
     'rest_framework_simplejwt',
@@ -63,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'e_commerce.urls'
@@ -186,3 +188,14 @@ CACHES = {
         }
     }
 }
+
+# for django-debug-toolbar
+INTERNAL_IPS = [
+    '127.0.0.1', '10.0.2.2'
+]
+if DEBUG:
+    import socket
+    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+    INTERNAL_IPS += [ip[:-1] + "1" for ip in ips]
+
+SHELL_PLUS = "ipython"
