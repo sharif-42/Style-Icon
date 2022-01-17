@@ -3,13 +3,16 @@ Django<=4.0,>=3.2.10
 django-elasticsearch-dsl==7.2.0
 djangorestframework>=3.10.0,<3.13.1
 djangorestframework-simplejwt>=4.7.0, <5.0.0
-django-redis>=5.0.0,<5.2.0                                                    # https://pypi.org/project/django-redis/
+django-redis>=5.0.0,<=5.2.0                                  # https://pypi.org/project/django-redis/
+django-extensions>=3.1.0,<=3.1.5                             # https://django-extensions.readthedocs.io/en/latest/
+django-debug-toolbar>=3.2,<=3.2.4                            # https://django-debug-toolbar.readthedocs.io/en/latest/
 elasticsearch==7.13.4
 elasticsearch-dsl==7.4.0
 flake8==4.0.1
 importlib-metadata==4.2.0
+ipython>=7.29.0,<=8.0.0
 mccabe==0.6.1
-# Pillow>=8.3.0, <8.4.0                                                         # https://github.com/python-pillow/Pillow
+# Pillow>=8.3.0, <8.4.0                                      # https://github.com/python-pillow/Pillow
 pycodestyle==2.8.0
 pyflakes==2.4.0
 pytz==2021.3

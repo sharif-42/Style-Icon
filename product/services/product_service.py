@@ -1,5 +1,5 @@
 from django.utils import timezone
-
+from django.core.cache import cache
 from product.models import Product
 from rest_utils.exceptions import (
     ProductNotFoundException,
@@ -12,6 +12,25 @@ class ProductService:
     def __init__(self, request=None, user=None):
         self.request = request
         self.user = user
+
+    def set_cache_product(self, cache_key, product_response):
+        """
+        Cache product for 1 hour
+        :param cache_key: cache_key
+        :param product_response: product_response
+        :return: None
+        """
+        cache.set(cache_key, product_response, 60 * 60)
+
+    def get_cached_product(self, cache_key):
+        cached_response = cache.get(cache_key)
+        return cached_response
+
+    def get_product_by_code(self, code):
+        try:
+            return self.model.objects.get(code=code)
+        except Product.DoesNotExist:
+            raise ProductNotFoundException()
 
     def get_product_by_uuid(self, uuid):
         try:

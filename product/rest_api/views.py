@@ -33,6 +33,13 @@ class ProductDetailsApiView(generics.RetrieveAPIView):
     service_class = ProductService
 
     def get(self, request, *args, **kwargs):
-        product = self.service_class().get_product_by_uuid(uuid=kwargs.get('uuid'))
-        serializer = self.serializer_class(product)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        code = kwargs.get('code')
+        cache_key = f"product-{code}"
+        cached_response = self.service_class().get_cached_product(cache_key=cache_key)
+        if cached_response:
+            response = cached_response
+        else:
+            product = self.service_class().get_product_by_code(code=code)
+            response = self.serializer_class(product).data
+            self.service_class().set_cache_product(cache_key=cache_key, product_response=response)
+        return Response(response, status=status.HTTP_200_OK)
