@@ -1,0 +1,4 @@
+-r ./base.txt
+
+django-extensions>=3.1.0,<=3.1.5                             # https://django-extensions.readthedocs.io/en/latest/
+django-debug-toolbar>=3.2,<=3.2.4                            # https://django-debug-toolbar.readthedocs.io/en/latest/

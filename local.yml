@@ -1,0 +1,62 @@
+version: "3"
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - style_icon_data:/data/style_icon_data/django/data
+    env_file:
+      - env/django.env
+      - env/postgres.env
+    depends_on:
+      - postgres
+      - elastic_search
+    command: /start
+    # command: python manage.py runserver 0.0.0.0:8080
+    links:
+      - postgres
+      - redis
+      - elastic_search
+
+    stdin_open: true
+    tty: true
+
+  postgres:
+    shm_size: 1g
+#    build:
+#      context: .
+#      dockerfile: ./compose/local/postgres/Dockerfile
+    image: postgres:14.5-alpine
+    volumes:
+      - style_icon_data:/data/style_icon_data/postgres/data
+    env_file:
+      - env/postgres.env
+
+  redis:
+    image: redis:6.2-alpine
+
+  elastic_search:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.4.0
+    container_name: style-icon_elastic_search
+    environment:
+      - node.name=style-icon_elastic_search
+      - cluster.name=style-icon_es-docker-cluster
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - style_icon_elasticsearch_data:/data/style_icon_data/elasticsearch/data
+    ports:
+      - "9200:9200"
+
+volumes:
+  style_icon_data: { }
+  style_icon_data_backups: { }
+  style_icon_elasticsearch_data: { }
