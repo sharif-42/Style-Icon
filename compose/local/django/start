@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+
+python manage.py migrate
+#python manage.py loaddata users.json
+#python manage.py loaddata id_types.json
+#python manage.py loaddata flow_types.json
+#python manage.py loaddata market_types.json
+#python manage.py loaddata product_groups.json
+#python manage.py loaddata contact_groups.json
+#python manage.py loaddata vat.json
+
+python manage.py runserver 0.0.0.0:8080
