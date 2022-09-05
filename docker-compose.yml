@@ -13,11 +13,11 @@ services:
       - env/django.env
     depends_on:
       - postgres
-      # - elastic_search
+      - elastic_search
     links:
       - postgres
       - redis
-      # - elastic_search
+      - elastic_search
 
     stdin_open: true
     tty: true
