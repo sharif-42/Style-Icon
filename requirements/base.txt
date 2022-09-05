@@ -11,8 +11,8 @@ redis<=4.1.0,>=4.0.0
 
 # Elastic Search
 django-elasticsearch-dsl==7.2.0
-elasticsearch==7.13.4
-elasticsearch-dsl==7.4.0
+# elasticsearch==7.13.4
+# elasticsearch-dsl==7.4.0
 
 flake8==4.0.1
 importlib-metadata==4.2.0
