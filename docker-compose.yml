@@ -8,7 +8,7 @@ services:
       - "8080:8080"
     command: python manage.py runserver 0.0.0.0:8080
     volumes:
-      - style_icon_data:/data/style_icon_data/django/data
+      - .:/code
     env_file:
       - env/django.env
     depends_on:
@@ -25,7 +25,7 @@ services:
   postgres:
     image: postgres:12.0-alpine
     volumes:
-      - style_icon_data:/data/style_icon_data/postgres/data
+      - style_icon_data:/var/lib/postgresql/data
     env_file:
       - env/postgres.env
     environment:
@@ -49,9 +49,10 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - style_icon_elasticsearch_data:/data/style_icon_data/elasticsearch/data
+      - style_icon_elasticsearch_data:/usr/share/elasticsearch/data
     ports:
       - "9200:9200"
+      - "9300:9300"
 
 volumes:
   style_icon_data: { }
