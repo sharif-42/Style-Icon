@@ -47,6 +47,7 @@ services:
       - cluster.name=style-icon_es-docker-cluster
       - discovery.type=single-node
       - bootstrap.memory_lock=true
+    mem_limit: 2048m
     ulimits:
       memlock:
         soft: -1
