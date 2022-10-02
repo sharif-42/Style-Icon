@@ -1,0 +1,22 @@
+[
+  {
+    "model": "product.product",
+    "pk": 1,
+    "fields": {
+      "uuid": "6cd6e6d7-214b-42db-8a5c-2615b19ccdec",
+      "code": "test_product_1",
+      "name": "Test Product 1",
+      "is_available": true,
+      "product_group": null,
+      "product_type": null,
+      "brand": null,
+      "in_stock": 10,
+      "short_description": "",
+      "long_description": "",
+      "weight": 100,
+      "created_at": "2022-07-08T12:44:13.045Z",
+      "updated_at": "2022-07-08T12:44:13.045Z"
+    }
+
+  }
+]
