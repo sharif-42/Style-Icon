@@ -27,7 +27,13 @@ products and product details. Can create cart and then order.
   ```  
 * Run the test cases for unit test.
     ```shell
-    docker-compose run django sh -c "python manage.py test"  
+    docker-compose run django sh -c "pytest"    
+    
+    # Using PDB
+    docker-compose run django sh -c "pytest --pdb -s" 
+    
+    # Run Specific Test Cases
+    docker-compose run django sh -c "pytest --pdb -s product/tests/test_views.py::TestProductListAPI" 
     ```
 * To create and populate the Elasticsearch index and mapping use the search_index command:
   ```shell

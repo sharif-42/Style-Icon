@@ -13,14 +13,14 @@ ENV PYTHONUNBUFFERED 1
 #    && apk add zlib-dev jpeg-dev gcc musl-dev \
 #    && apk add postgresql-dev gcc python3-dev musl-dev
 
-# install dependencies
-RUN pip install --upgrade pip
-COPY requirements.txt /code/
-
 # install psycopg2 dependencies
 RUN apk add --update --no-cache postgresql-client
 RUN apk add --update --no-cache --virtual .tmp-build-deps \
     gcc libc-dev linux-headers postgresql-dev
+
+# install dependencies
+RUN pip install --upgrade pip
+COPY requirements.txt /code/
 
 RUN pip install -r requirements.txt
 RUN apk del .tmp-build-deps
